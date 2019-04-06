@@ -1,0 +1,25 @@
+输入一个链表，输出该链表中倒数第k个结点。
+class Solution {
+public:
+    ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
+        if(pListHead == NULL || k == 0){
+            return NULL;
+        }
+        ListNode* pre =pListHead;
+        ListNode* after =pListHead;
+        k--;
+        while(k>0){
+            if(pre->next==NULL)return NULL;
+            pre=pre->next;
+            k--;
+        }
+        while(pre->next!=NULL){
+            pre = pre->next;
+            after = after->next; 
+        }
+        return after;
+    }
+};
+注意问题：传递合理性：
+1. 第一个pointer向后传递k-1次
+2. if(pre->next==NULL)return NULL; 这一句是检查直到最后第k-1次传递过程中pre->next都存在，代表链表个数大于等于k
