@@ -1,0 +1,31 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* p = head;
+        ListNode* pR = head;
+        ListNode* pPrev =NULL;
+        if(head==NULL||head->next==NULL)return head;
+        while(p!=NULL){
+            ListNode* pNext = p->next;
+            if(pNext==NULL){
+                pR = p;
+            }
+            p->next = pPrev;
+            pPrev = p;
+            p = pNext;
+        }
+        return pR;
+    }
+};
+
+重点：
+1.注意对于temp point的使用，while每一次只做一次的交换
+2.每一次 do 把old list的头放到new list的头，有点像stack的感觉，但不需要用stack去做
