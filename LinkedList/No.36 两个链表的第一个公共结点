@@ -1,0 +1,31 @@
+
+给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。
+
+
+class Solution {
+public:
+    ListNode* EntryNodeOfLoop(ListNode* pHead)
+    {
+        if(pHead==NULL)return NULL;
+        ListNode* slow = pHead;
+        ListNode* fast = pHead;
+        while(fast->next!=NULL&&fast->next->next!=NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(fast==slow){
+                break;
+            }
+        }
+        if(fast->next==NULL||fast->next->next==NULL)return NULL;
+        slow = pHead;
+        while( slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        return fast;
+    }
+};
+
+ps：
+第一次遍历后，停留的地方正好是fast指针走过了一个环，所以假设这个位置到起点为k，起点到入口为s，则slow指针在环中走了k-s个距离，然而fast走了s+r+k-s；
+因为s+r+k-s = 2k 所以 r=k， 所以 slow 再走r-（k-s）=s正好回到起点，所以fast只要回到起点走就正好和slow遇到。
